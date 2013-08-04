@@ -1,0 +1,46 @@
+
+SwingSet2 Demos
+---------------
+JInternalFrame
+JButton, JRadioButton, JCheckBox
+JColorChooser
+JComboBox
+JEditorPane
+JList
+JOptionPane
+JProgressBar
+JScrollPane
+JSlider
+JSplitPane
+JTabbedPane
+JTable
+JTree
+Tooltips
+
+Missing:
+JApplet
+JFrame, JDialog, JWindow
+JFileChooser?
+JTextField?
+JLabel
+JToolBar*
+JMenu, JMenuBar
+
+1.4
+JSpinner
+JFormattedTextfield
+indeterminate progress bar
+new drag and drop
+
+1.5
+Synth
+context popup menu
+table printing
+
+1.6
+Table sorting/filtering/highlighting
+Tabs as components
+SwingWorker
+text printing
+
+
