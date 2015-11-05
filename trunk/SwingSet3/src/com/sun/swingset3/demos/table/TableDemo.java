@@ -423,23 +423,24 @@ public class TableDemo extends JPanel {
     }
 
     protected void configureFilters() {
-        if (showOnlyWinners && hasFilterString()) {
-            List<RowFilter<OscarTableModel, Integer>> filters =
-                    new ArrayList<RowFilter<OscarTableModel, Integer>>(2);
-            filters.add(winnerFilter);
-            filters.add(searchFilter);
-            RowFilter<Object, Object> comboFilter = RowFilter.andFilter(filters);
-            sorter.setRowFilter(comboFilter);
-        } else if (showOnlyWinners) {
-            sorter.setRowFilter(winnerFilter);
-        } else if (hasFilterString()) {
-            sorter.setRowFilter(searchFilter);
-        } else {
-            sorter.setRowFilter(null);
-        }
-        tableStatus.setText((hasFilterString() ? searchLabelString : statusLabelString)
-                + oscarTable.getRowCount());
-
+    	// FIXME RowFilter.andFilter(filters.
+//        if (showOnlyWinners && hasFilterString()) {
+//            List<RowFilter<OscarTableModel, Integer>> filters =
+//                    new ArrayList<RowFilter<OscarTableModel, Integer>>(2);
+//            filters.add(winnerFilter);
+//            filters.add(searchFilter);
+//            RowFilter<Object, Object> comboFilter = RowFilter.andFilter(filters);
+//            sorter.setRowFilter(comboFilter);
+//        } else if (showOnlyWinners) {
+//            sorter.setRowFilter(winnerFilter);
+//        } else if (hasFilterString()) {
+//            sorter.setRowFilter(searchFilter);
+//        } else {
+//            sorter.setRowFilter(null);
+//        }
+//        tableStatus.setText((hasFilterString() ? searchLabelString : statusLabelString)
+//                + oscarTable.getRowCount());
+//
     }
 
     private class ShowWinnersListener implements ChangeListener {
