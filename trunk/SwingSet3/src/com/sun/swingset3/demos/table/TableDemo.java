@@ -423,12 +423,12 @@ public class TableDemo extends JPanel {
     }
 
     protected void configureFilters() {
-        if (showOnlyWinners && hasFilterString()) {
+    	if (showOnlyWinners && hasFilterString()) {
             List<RowFilter<OscarTableModel, Integer>> filters =
                     new ArrayList<RowFilter<OscarTableModel, Integer>>(2);
             filters.add(winnerFilter);
             filters.add(searchFilter);
-            RowFilter<Object, Object> comboFilter = RowFilter.andFilter(filters);
+            RowFilter<OscarTableModel, Integer> comboFilter = RowFilter.andFilter(filters);
             sorter.setRowFilter(comboFilter);
         } else if (showOnlyWinners) {
             sorter.setRowFilter(winnerFilter);
