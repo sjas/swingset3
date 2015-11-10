@@ -34,7 +34,10 @@ package com.sun.swingset3;
 import java.awt.Component;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
@@ -199,13 +202,13 @@ public class Demo {
             // one empty string. In this case we skip it.
             if (!(sourceFilePaths.length == 1 && sourceFilePaths[0].length() == 0)) {
                 for (String path : sourceFilePaths) {
-                    URL url = getClass().getClassLoader().getResource(path);
-                    if (url == null) {
-                        SwingSet3.logger.log(Level.WARNING,
+                	try {
+						URL url = new URL("file://" + System.getProperty("user.dir") + "/src/" + path);
+						pathURLs.add(url);
+					} catch (MalformedURLException e) {
+						SwingSet3.logger.log(Level.WARNING,
                                 "unable to load source file '" + path + "'");
-                    } else {
-                        pathURLs.add(url);
-                    }
+					}
                 }
             }
 
