@@ -4,5 +4,5 @@ SwingSet3 Application, taken from the svn repo at https://java.net/projects/swin
 
 # TODO #
 
- - [ ] make it buildable again
- - [ ] fix ant script
+ - [x] make it buildable again - thanks to @kaganem
+ - [ ] fix ant script - honestly dont know wether this is still out in the open. pull requests welcome.
