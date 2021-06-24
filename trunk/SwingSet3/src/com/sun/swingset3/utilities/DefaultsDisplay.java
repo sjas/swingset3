@@ -40,7 +40,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -76,6 +81,8 @@ import javax.swing.table.TableRowSorter;
  * @author aim
  */
 public class DefaultsDisplay extends JPanel {
+    private static final long serialVersionUID = 1L;
+
     private static final int rowHeight = 32;
     
     public static void main(String[] args) {
@@ -97,7 +104,7 @@ public class DefaultsDisplay extends JPanel {
     private Map<String,String> lookAndFeelsMap; 
     private final Map<String,JComponent> defaultsTablesMap;
     
-    private JComboBox lookAndFeelComboBox;
+    private JComboBox<String> lookAndFeelComboBox;
     private JCheckBox onlyVisualsCheckBox;
     private JTabbedPane tabPane;
     
@@ -134,7 +141,7 @@ public class DefaultsDisplay extends JPanel {
         JPanel panel = new JPanel();
         
         JLabel label = new JLabel("Current Look and Feel");
-        lookAndFeelComboBox = new JComboBox();
+        lookAndFeelComboBox = new JComboBox<String>();
         label.setLabelFor(lookAndFeelComboBox);
         panel.add(label);
         panel.add(lookAndFeelComboBox);
@@ -148,10 +155,6 @@ public class DefaultsDisplay extends JPanel {
             if (name.equals("Mac OS X")) {
                 name = OSXLookAndFeelName;
             }
-            // workaround for bug where Nimbus classname is incorrect
-            lookAndFeelsMap.put(name, name.equals("Nimbus")? 
-                "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel" :
-                          info.getClassName());
             lookAndFeelComboBox.addItem(name);
         }
         lookAndFeelComboBox.setSelectedItem(UIManager.getLookAndFeel().getName());
@@ -264,7 +267,8 @@ public class DefaultsDisplay extends JPanel {
     }
     
     private class ChangeLookAndFeelAction extends AbstractAction {
-        
+        private static final long serialVersionUID = 1L;
+
         public ChangeLookAndFeelAction() {
             super("Change LookAndFeel");
         }
@@ -286,6 +290,7 @@ public class DefaultsDisplay extends JPanel {
     }
     
     private static class UIDefaultsTableModel extends AbstractTableModel {
+        private static final long serialVersionUID = 1L;
         private static final int KEY_COLUMN = 0;
         private static final int TYPE_COLUMN = 1;
         private static final int VALUE_COLUMN = 2;
@@ -298,7 +303,7 @@ public class DefaultsDisplay extends JPanel {
             defaults = new UIDefaults();
             keys = new ArrayList<Object>();
             UIDefaults realDefaults = UIManager.getDefaults();
-            Enumeration keysEnum = realDefaults.keys();
+            Enumeration<?> keysEnum = realDefaults.keys();
             while (keysEnum.hasMoreElements()) {
                 Object key = keysEnum.nextElement();
                 if (!defaults.containsKey(key)) {
@@ -318,8 +323,8 @@ public class DefaultsDisplay extends JPanel {
             return defaults.size();
         }
         
-        public Class getColumnClass(int column) {
-            Class klass = null;
+        public Class<?> getColumnClass(int column) {
+            Class<?> klass = null;
             switch(column) {
                 case KEY_COLUMN: {
                     klass = String.class;
@@ -359,6 +364,7 @@ public class DefaultsDisplay extends JPanel {
     }
     
     private static class RowRenderer extends JLabel implements TableCellRenderer {
+        private static final long serialVersionUID = 1L;
         private final Color[] rowColors;
         private final Border noFocusBorder = new EmptyBorder(1, 1, 1, 1); 
         
@@ -405,7 +411,8 @@ public class DefaultsDisplay extends JPanel {
     }
     
     private static class KeyRenderer extends RowRenderer {
-        
+        private static final long serialVersionUID = 1L;
+
         public KeyRenderer(Color colors[]) {
             super(colors);
             setFont(getFont().deriveFont(Font.BOLD));
@@ -413,6 +420,7 @@ public class DefaultsDisplay extends JPanel {
     } 
     
     private static class ValueRenderer extends RowRenderer {
+        private static final long serialVersionUID = 1L;
         private final JButton buttonIconRenderer;
         private final JRadioButton radioIconRenderer;
         private final JMenuItem menuItemIconRenderer;
