@@ -34,13 +34,12 @@ package com.sun.swingset3;
 import java.awt.Component;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -61,7 +60,7 @@ public class Demo {
         return parts.length >= 2? parts[parts.length-2] : "general";
     }
     
-    public static String deriveCategoryFromPackageName(Class demoClass) {
+    public static String deriveCategoryFromPackageName(Class<?> demoClass) {
         String packageName = demoClass.getPackage() != null? 
             demoClass.getPackage().getName() : null;
         if (packageName != null) {
@@ -80,7 +79,7 @@ public class Demo {
         return convertToDemoName(simpleName);
     }
     
-    public static String deriveNameFromClassName(Class demoClass) {
+    public static String deriveNameFromClassName(Class<?> demoClass) {
         String className = demoClass.getSimpleName();
         return convertToDemoName(className);
     }
@@ -137,7 +136,7 @@ public class Demo {
         pcs = new PropertyChangeSupport(this);
     }
     
-    public Class getDemoClass() {
+    public Class<?> getDemoClass() {
         return demoClass;
     }
  
@@ -201,9 +200,10 @@ public class Demo {
             // If meta-data is not specified then sourceFilePaths contains
             // one empty string. In this case we skip it.
             if (!(sourceFilePaths.length == 1 && sourceFilePaths[0].length() == 0)) {
+                String currDir = System.getProperty("user.dir").replace("\\", "/").replaceFirst("^[A-Z]:", "");
                 for (String path : sourceFilePaths) {
                 	try {
-						URL url = new URL("file://" + System.getProperty("user.dir") + "/src/" + path);
+						URL url = new URL("file://" + currDir + "/src/" + path);
 						pathURLs.add(url);
 					} catch (MalformedURLException e) {
 						SwingSet3.logger.log(Level.WARNING,
