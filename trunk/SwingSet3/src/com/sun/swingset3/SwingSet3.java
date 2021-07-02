@@ -31,12 +31,6 @@
 
 package com.sun.swingset3;
 
-import com.sun.swingset3.utilities.AnimatingSplitPane;
-import com.sun.swingset3.utilities.Utilities;
-import org.jdesktop.application.Action;
-import org.jdesktop.application.ResourceMap;
-import org.jdesktop.application.SingleFrameApplication;
-import org.jdesktop.application.View;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -51,7 +45,13 @@ import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -84,11 +84,17 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import org.jdesktop.application.Action;
+import org.jdesktop.application.ResourceMap;
+import org.jdesktop.application.SingleFrameApplication;
+import org.jdesktop.application.View;
+
 import com.sun.swingset3.codeview.CodeViewer;
+import com.sun.swingset3.utilities.AnimatingSplitPane;
 import com.sun.swingset3.utilities.RoundedBorder;
 import com.sun.swingset3.utilities.RoundedPanel;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import com.sun.swingset3.utilities.Utilities;
 
 /**
  *
@@ -129,17 +135,7 @@ public class SwingSet3 extends SingleFrameApplication  {
         if (System.getProperty("os.name").equals("Mac OS X")) {
             System.setProperty("apple.laf.useScreenMenuBar", "true"); 
         }
-        
-        // temporary workaround for problem with Nimbus classname
-        UIManager.LookAndFeelInfo lafInfo[] = UIManager.getInstalledLookAndFeels();
-        for(int i = 0; i < lafInfo.length; i++) {
-            if (lafInfo[i].getName().equals("Nimbus")) {
-                lafInfo[i] = new UIManager.LookAndFeelInfo("Nimbus",
-                        "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-                break;
-            }
-        }
-        UIManager.setInstalledLookAndFeels(lafInfo);
+
         UIManager.put("swing.boldMetal", Boolean.FALSE);
     }
     
@@ -200,7 +196,13 @@ public class SwingSet3 extends SingleFrameApplication  {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ex) {
-            // not catestrophic
+            // not catastrophic
+        	// try the Java 11 class
+            try {
+                UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            } catch (Exception ex2) {
+                // not catastrophic
+            }
         }
         resourceMap = getContext().getResourceMap();
         
@@ -705,6 +707,7 @@ public class SwingSet3 extends SingleFrameApplication  {
     }
  
     private class ViewCodeSnippetAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
         public ViewCodeSnippetAction() {
             super("View Source Code");
         }
@@ -726,6 +729,7 @@ public class SwingSet3 extends SingleFrameApplication  {
     }
     
     private static class EditPropertiesAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
         public EditPropertiesAction() {
             super("Edit Properties");
         }
